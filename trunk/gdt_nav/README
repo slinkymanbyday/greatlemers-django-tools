@@ -1,4 +1,4 @@
-Welcome to gdt-nav, a django app for handling menus.
+Welcome to gdt_nav, a django app for handling menus.
 
 This app provides functionality to store a menu hierarchy in a database and use
 said hierarchy to generate dynamic menus based on url of the current request.
@@ -18,7 +18,7 @@ when appropriate, this includes anon,auth and staff as well as any Permission
 objects that are available.
 
 Quick Start:
-If you want to get up and running quickly just drop gdt-nav into a django
+If you want to get up and running quickly just drop gdt_nav into a django
 project and run syncdb.  Then create a menu group and you're ready to start
 adding items. Once you've added the items you want to the menu group go to a
 template and place {% load menu_tags %} somewhere near the top of the file
@@ -26,6 +26,10 @@ and finally {% menu_as_ul menu_group %} at the location where you want the
 menu to appear (where menu_group is a context variable representing your new
 menu group.  View the page and you should see your menu appear in the form of
 an unordered list.
+
+**Important**
+The app must exist in a directory named gdt_nav otherwise the template tags
+will not work properly.
 
 Version 1.0 beta:
 This version is the first one to go live and is fully functional except for the
