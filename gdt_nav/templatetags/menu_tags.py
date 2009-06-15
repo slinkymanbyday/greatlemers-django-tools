@@ -1,5 +1,6 @@
 from django import template
 from django.template import RequestContext
+from gdt_nav.models import MenuGroup
 
 
 register = template.Library()
@@ -41,11 +42,20 @@ def menu_as_tag(context, menu_group, group_tag="ul", item_tag="li"):
 
   Keyword arguments:
   context -- The current template context
-  menu_group -- The collection of menu_options to convert.
+  menu_group -- The collection of menu_options to convert, or the name of the
+                desired collection.
   group_tag -- The tag to surround collections of menu items with (default ul).
   item_tag -- The tag to surround individual menu items with (default li).
 
   """
+  # If a menu group's not been passed in then assume it's a string naming the
+  # group to use and attempt to fetch it.
+  if type(menu_group) != MenuGroup:
+    try:
+      menu_group = MenuGroup.objects.get(name=menu_group)
+    except:
+      return { "menu_string":"", }
+
   # Generate the menu hierarchy, a list of selected items and a list of the
   # named parameters that were used to form the url.
   hierarchies, selected_items, selected_params = menu_group.generate_hierarchy(context.get('request'))
