@@ -1,8 +1,7 @@
-from models import MenuGroup, Article, MenuOption
+from models import MenuGroup, MenuOption
 from django.contrib.admin import site, ModelAdmin, VERTICAL
 from django.contrib.sites.models import Site
 site.register(MenuGroup)
-site.register(Article)
 
 class MenuOptionAdmin(ModelAdmin):
   list_display = ('name', 'option_type', 'menu_group',)
