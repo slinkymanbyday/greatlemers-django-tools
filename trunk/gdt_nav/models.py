@@ -5,6 +5,7 @@ from django.contrib.sites.models import Site
 from django.core.exceptions import FieldError
 from django.core.urlresolvers import reverse, get_resolver, NoReverseMatch
 from django.db import models
+from django.utils.translation import ugettext as _
 
 
 class MenuGroup(models.Model):
@@ -362,16 +363,16 @@ class MenuOption(models.Model):
       # Otherwise when dealing with an absolute url plug it straight into the
       # template.
       string_params = { 'url': self.url,
-                        'title': self.alt_text,
-                        'link_text': self.name,
+                        'title': _(self.alt_text),
+                        'link_text': _(self.name),
                       }
       return ((MenuOption.link_template % string_params, False),)
     elif self.option_type == MenuOption.NAMED_URL_MENU_OPTION:
       # When dealing with a named url generate it first then plug it into
       # the template.
       string_params = { 'url': self._generate_named_link(url_params),
-                        'title': self.alt_text,
-                        'link_text': self.name,
+                        'title': _(self.alt_text),
+                        'link_text': _(self.name),
                       }
       return ((MenuOption.link_template % string_params, False),)
 
@@ -397,8 +398,8 @@ class MenuOption(models.Model):
       or self.option_type == MenuOption.NAMED_URL_MENU_OPTION:
       # Otherwise when dealing with absolute or named urls just plug the
       # standard info into the template.
-      string_params = { 'title': self.alt_text,
-                        'link_text': self.name,
+      string_params = { 'title': _(self.alt_text),
+                        'link_text': _(self.name),
                       }
       return ((MenuOption.non_link_template % string_params, True),)
 
@@ -535,8 +536,8 @@ class MenuOption(models.Model):
 
     # Items to be plugged into the templates.
     string_params = { 'url': '',
-                      'title': self.alt_text,
-                      'link_text': self.name,
+                      'title': _(self.alt_text),
+                      'link_text': _(self.name),
                     }
     results = []
     # Loop through all the items matched by this url.
