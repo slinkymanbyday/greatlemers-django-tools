@@ -7,7 +7,7 @@ register = template.Library()
 
 # Some templates to be used for describing how the menu depth class should be
 # output, how items should be output and how groups of items should be output.
-_menu_level_template = """menu-level-%s"""
+_menu_level_template = """menu_level_%s"""
 _item_template = """<%(item_tag)s class="menu_item %(menu_level)s">%(item)s%(sub_list)s</%(item_tag)s>"""
 _group_template = """<%(group_tag)s class="%(menu_level)s">%(group)s</%(group_tag)s>"""
 
