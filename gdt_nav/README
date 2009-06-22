@@ -1,4 +1,4 @@
-Welcome to gdt_nav, a django app for handling menus.
+Welcome to gdt_nav, a Django app for handling menus.
 
 This app provides functionality to store a menu hierarchy in a database and use
 said hierarchy to generate dynamic menus based on url of the current request.
@@ -16,6 +16,11 @@ should work fine without it also.
 Permissions may be allocated to menu items to ensure that they are seen only
 when appropriate, this includes anon,auth and staff as well as any Permission
 objects that are available.
+
+System Requirements:
+So far the only requirement is Django itself.  Testing has been done against
+both Django 1.0.2 and r11079 of the Django source tree (for Django 1.1) no
+issues have arisen yet.
 
 Quick Start:
 If you want to get up and running quickly just drop gdt_nav into a django
