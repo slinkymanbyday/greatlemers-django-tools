@@ -19,7 +19,7 @@ objects that are available.
 
 System Requirements:
 So far the only requirement is Django itself.  Testing has been done against
-both Django 1.0.2 and r11079 of the Django source tree (for Django 1.1) no
+both Django 1.0.2 and r11199 of the Django source tree (for Django 1.1) no
 issues have arisen yet.
 
 Quick Start:
@@ -31,6 +31,10 @@ and finally {% menu_as_ul menu_group %} at the location where you want the
 menu to appear (where menu_group is a context variable representing your new
 menu group.  View the page and you should see your menu appear in the form of
 an unordered list.
+
+In order to access the specialised admin urls for creating menu options add the following line to your urls.py:
+(r'^admin/gdt_nav/menuoption/add/(?P<option_type>\d)/$', 'gdt_nav.admin_views.add_option'),
+Now restart your server and the creation urls will be available at /admin/gdt_nav/menuoption/add/0/ /admin/gdt_nav/menuoption/add/1/ and /admin/gdt_nav/menuoption/add/2/ for adding absolute url options, named url options and model options respectively.  A future update will include a nicer initial add page to ease the use of these specialist ones.
 
 **Important**
 The app must exist in a directory named gdt_nav otherwise the template tags
