@@ -310,7 +310,7 @@ class MenuOption(models.Model):
   url = models.URLField(verify_exists=False, blank=True, null=True,
                         help_text="The absolute url that represents this option (required for absolute url menu options).")
   url_name = models.CharField(max_length=64, blank=True, null=True,
-                              help_text="The 'reversable' url name that represnts this option (required for named url and model menu options).")
+                              help_text="The 'reversable' url name that represents this option (required for named url and model menu options).")
   content_type = models.ForeignKey(ContentType, blank=True, null=True,
                                    help_text="The type of object to fetch and produce options for (required for model menu options).")
   manager = models.CharField(max_length=32, default='objects', blank=True, null=True,
