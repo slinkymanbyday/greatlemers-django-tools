@@ -272,8 +272,8 @@ class MenuOption(models.Model):
   NAMED_URL_MENU_OPTION = 1
   MODEL_MENU_OPTION = 2
   MODEL_TYPE_CHOICES = (
-      (ABSOLUTE_URL_MENU_OPTION, 'Absolute URL'),
-      (NAMED_URL_MENU_OPTION, 'Named URL'),
+      (ABSOLUTE_URL_MENU_OPTION, 'Absolute URL Menu Option'),
+      (NAMED_URL_MENU_OPTION, 'Named URL Menu Option'),
       (MODEL_MENU_OPTION, 'Model Menu Option'),
   )
 

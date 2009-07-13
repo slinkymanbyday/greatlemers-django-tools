@@ -32,9 +32,8 @@ menu to appear (where menu_group is a context variable representing your new
 menu group.  View the page and you should see your menu appear in the form of
 an unordered list.
 
-In order to access the specialised admin urls for creating menu options add the following line to your urls.py:
-(r'^admin/gdt_nav/menuoption/add/(?P<option_type>\d)/$', 'gdt_nav.admin_views.add_option'),
-Now restart your server and the creation urls will be available at /admin/gdt_nav/menuoption/add/0/ /admin/gdt_nav/menuoption/add/1/ and /admin/gdt_nav/menuoption/add/2/ for adding absolute url options, named url options and model options respectively.  A future update will include a nicer initial add page to ease the use of these specialist ones.
+Admin Interface:
+Providing you are including the admin interface urls in the correct way for your version of django the special menu option creation urls should be automagically created.
 
 **Important**
 The app must exist in a directory named gdt_nav otherwise the template tags

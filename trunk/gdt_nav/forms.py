@@ -1,6 +1,8 @@
 from django.forms import ModelForm
 from django import forms
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import Permission
+from django.contrib.admin import widgets as admin_widgets
 from models import MenuOption
 
 class MenuOptionWidget(forms.HiddenInput):
