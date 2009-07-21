@@ -1,4 +1,5 @@
 from models import MenuGroup, MenuOption
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.contrib.admin import site, ModelAdmin, VERTICAL
 from django.contrib.sites.models import Site
 from django.utils.functional import update_wrapper
@@ -85,8 +86,14 @@ class MenuOptionAdmin(ModelAdmin):
                extra_context=None, option_type=None):
     if extra_context is None:
       extra_context = {}
+    extra_context['app_label'] = _("GDT Nav")
     extra_context['menu_option_types'] = MenuOption.MODEL_TYPE_CHOICES
     if option_type is not None:
+      # Hack to detect if we need to specify the javascript url or not.
+      try:
+        reverse('admin:jsi18n')
+      except NoReverseMatch, e:
+        extra_context['jsurl'] = "../../../../jsi18n/"
       option_type = int(option_type)
       type = dict(MenuOption.MODEL_TYPE_CHOICES)[option_type]
       extra_context['crumb'] = _("Add %(name)s") % {'name':type}
@@ -105,6 +112,7 @@ class MenuOptionAdmin(ModelAdmin):
       option_type = None
     if extra_context is None:
       extra_context = {}
+    extra_context['app_label'] = _("GDT Nav")
     extra_context['menu_option_types'] = MenuOption.MODEL_TYPE_CHOICES
     if option_type is not None:
       option_type = int(option_type)
@@ -118,9 +126,9 @@ class MenuOptionAdmin(ModelAdmin):
 
   def changelist_view(self, request, extra_context=None):
     if extra_context is None:
-      extra_context = {'menu_option_types':MenuOption.MODEL_TYPE_CHOICES}
-    else:
-      extra_context['menu_option_types'] = MenuOption.MODEL_TYPE_CHOICES
+      extra_context = {}
+    extra_context['menu_option_types'] = MenuOption.MODEL_TYPE_CHOICES
+    extra_context['app_label'] = _("GDT Nav")
     return ModelAdmin.changelist_view(self, request, extra_context)
 
   def get_urls(self):
