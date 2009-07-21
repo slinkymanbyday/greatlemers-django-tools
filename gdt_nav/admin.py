@@ -138,14 +138,13 @@ class MenuOptionAdmin(ModelAdmin):
       def wrapper(*args, **kwargs):
         return self.admin_site.admin_view(view)(*args, **kwargs)
       return update_wrapper(wrapper, view)
-    info = (self.admin_site.name,
-            self.model._meta.app_label,
+    info = (self.model._meta.app_label,
             self.model._meta.module_name
            )
     urlpatterns = patterns('',
       url(r'^add/(?P<option_type>\d)/$',
           wrap(self.add_view),
-          name='%sadmin_%s_%s_add_by_type' % info),
+          name='%s_%s_add_by_type' % info),
     ) + urlpatterns
     return urlpatterns
 
