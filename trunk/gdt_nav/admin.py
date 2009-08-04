@@ -191,6 +191,10 @@ class AbsoluteMenuOptionAdmin(ModelAdmin):
     ),
   )
 
+  def response_add(self, request, obj, post_url_continue='../../%s/'):
+    """Proxy to ensure the post_url_continue default is correct"""
+    return ModelAdmin.response_add(self, request, obj, post_url_continue)
+
 class NamedMenuOptionAdmin(ModelAdmin):
   list_display = ('name', 'option_type', 'menu_group',)
   search_fields = ('name',)
@@ -232,6 +236,10 @@ class NamedMenuOptionAdmin(ModelAdmin):
                     },
     ),
   )
+
+  def response_add(self, request, obj, post_url_continue='../../%s/'):
+    """Proxy to ensure the post_url_continue default is correct"""
+    return ModelAdmin.response_add(self, request, obj, post_url_continue)
 
 class ModelMenuOptionAdmin(ModelAdmin):
   list_display = ('name', 'option_type', 'menu_group',)
@@ -285,3 +293,7 @@ class ModelMenuOptionAdmin(ModelAdmin):
                           },
     ),
   )
+
+  def response_add(self, request, obj, post_url_continue='../../%s/'):
+    """Proxy to ensure the post_url_continue default is correct"""
+    return ModelAdmin.response_add(self, request, obj, post_url_continue)
