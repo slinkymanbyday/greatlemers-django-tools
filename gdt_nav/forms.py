@@ -8,10 +8,10 @@ from models import MenuOption
 class MenuOptionWidget(forms.HiddenInput):
     def render(self, name, value, attrs=None):
         try:
-          value = int(value)
-          hidden_input = super(MenuOptionWidget,self).render(name, value, attrs)
-          option_type_name = dict(MenuOption.MODEL_TYPE_CHOICES)[value]
-        except ValueError, e:
+          int_val = int(value)
+          hidden_input = super(MenuOptionWidget,self).render(name,int_val,attrs)
+          option_type_name = dict(MenuOption.MODEL_TYPE_CHOICES)[int_val]
+        except (KeyError, ValueError), e:
           hidden_input = ''
           option_type_name = 'Unknown Selection'
         return mark_safe("%s%s" % (hidden_input, option_type_name))
