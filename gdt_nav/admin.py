@@ -19,6 +19,8 @@ class MenuOptionAdmin(ModelAdmin):
   ordering = ('menu_group', 'name',)
   filter_horizontal = ('permissions',)
   radio_fields = {'option_type':VERTICAL,}
+  change_list_template = "admin_menuoption_change_list.html"
+  change_form_template = "admin_menuoption_change_form.html"
   fieldsets = (
     (None, {'fields': ('option_type',
                        'name',
