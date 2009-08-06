@@ -129,6 +129,7 @@ class MenuOptionAdmin(ModelAdmin):
       extra_context = {}
     extra_context['menu_option_types'] = MenuOption.MODEL_TYPE_CHOICES
     extra_context['app_label'] = _("GDT Nav")
+    extra_context['menu_groups'] = MenuGroup.objects.order_by('name')
     return ModelAdmin.changelist_view(self, request, extra_context)
 
   def get_urls(self):

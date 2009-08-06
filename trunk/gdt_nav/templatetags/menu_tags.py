@@ -1,6 +1,6 @@
 from django import template
 from django.template import RequestContext
-from gdt_nav.models import MenuGroup
+from gdt_nav.models import MenuGroup, MenuOption
 
 
 register = template.Library()
@@ -10,6 +10,61 @@ register = template.Library()
 _menu_level_template = """menu_level_%s"""
 _item_template = """<%(item_tag)s class="menu_item %(menu_level)s">%(item)s%(sub_list)s</%(item_tag)s>"""
 _group_template = """<%(group_tag)s class="%(menu_level)s">%(group)s</%(group_tag)s>"""
+
+@register.inclusion_tag("admin_menu_as_tag.html", takes_context=True)
+def admin_menu_as_tag(context, menu_root, spaces='', last_item=True):
+  """
+  Return a menu group as an html structure based on the tag names passed in.
+
+  Keyword arguments:
+  context -- The current template context
+  menu_root -- The collection of menu_options to convert, or the name of the
+               desired collection.
+  spaces -- A string representing the menu hierarchy drawing structure of the
+            parent element.
+  last_item -- Is this the last item of a group of menu options.
+
+
+  """
+  # If neither a menu group nor a menu option has been passed in then assume
+  # it's a string naming the group to use and attempt to fetch it.
+  item = None
+  if type(menu_root) == MenuGroup:
+    children = menu_root.menu_items.filter(parent__isnull=True).order_by('ordering')
+  elif type(menu_root) == MenuOption:
+    item = menu_root
+    children = menu_root.menuoption_set.order_by('ordering')
+  else:
+    try:
+      menu_root = MenuGroup.objects.get(name=menu_group)
+      children = menu_root.menu_items.filter(parent__isnull=True).order_by('ordering')
+    except:
+      children = MenuGroup.objects.empty()
+  space_string = spaces
+  first_spaces = spaces + "&#9475;" + "<br />"
+  second_spaces = "<br />" + spaces
+  if last_item:
+    space_string += "&#9584;"
+    child_space_string = spaces + "&#12288;"
+    second_spaces += "&#12288;"
+  else:
+    space_string += "&#9507;"
+    child_space_string = spaces + "&#9475;"
+    second_spaces += "&#9475;"
+  if children.count() > 0:
+    space_string += "&#9523;"
+    second_spaces += "&#9475;"
+  else:
+    space_string += "&#9473;"
+    second_spaces += "&#12288;"
+  space_string += "&#9588;"
+  return { "item":item,
+           "children":children,
+           "spaces":space_string,
+           "child_spaces":child_space_string,
+           "first_spaces":first_spaces,
+           "second_spaces":second_spaces,
+         }
 
 @register.inclusion_tag("menu_as_tag.html", takes_context=True)
 def menu_as_ul(context, menu_group):

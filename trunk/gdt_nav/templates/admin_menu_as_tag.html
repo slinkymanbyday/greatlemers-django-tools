@@ -1,0 +1,13 @@
+{% load menu_tags adminmedia %}
+{% if item %}
+  <tr>
+    <th scope="row" style="white-space:pre;vertical-align:middle;line-height:0.9em;padding-top:0px;padding-bottom:0px;overflow:hidden;">{{ first_spaces|safe }}{{ spaces|safe }}{{ item.as_admin_link|safe }}{{ second_spaces|safe }}</th>
+    <td>{{ item.get_option_type_display }}</td>
+    <td><img src="{% admin_media_prefix %}img/admin/icon-{{ item.show_to_anonymous|yesno }}.gif" /></td>
+    <td><img src="{% admin_media_prefix %}img/admin/icon-{{ item.show_to_authenticated|yesno }}.gif" /></td>
+    <td><img src="{% admin_media_prefix %}img/admin/icon-{{ item.show_to_staff|yesno }}.gif" /></td>
+  </tr>
+{% endif %}
+{% for child in children %}
+  {% admin_menu_as_tag child child_spaces forloop.last %}
+{% endfor %}
