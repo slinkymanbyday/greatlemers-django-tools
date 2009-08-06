@@ -21,6 +21,8 @@ class MenuGroup(models.Model):
   notes = models.TextField(blank=True, default='',
                            help_text="Any extra info about this menu group (will not be publically visible).")
 
+  link_template = """<a href="%(url)s" title="%(title)s" class="section">%(link_text)s</a>"""
+
   def __unicode__(self):
     return self.name
 
@@ -29,6 +31,33 @@ class MenuGroup(models.Model):
 
   def __repr__(self):
     return """<MenuGroup "%s">""" % self.name
+
+  def as_admin_link(self):
+    """Generate an HTML tag representing a link to edit this group.
+
+    This function is mostly used internally and will produce an HTML tag that
+    represents this menu group's page on the admin site allowing quick access
+    to the page for editing the item.
+
+    """
+
+    try:
+      # Assume we're dealing with a nice version of django that can handle
+      # reversing admin urls.
+      info = (self._meta.app_label,
+              self._meta.module_name
+             )
+      url_name = 'admin:%s_%s_change' % info
+      url = reverse(url_name, args=[self.pk])
+    except NoReverseMatch, e:
+      # If not then this function is designed to run on the url level just below
+      # edit anyway so return the url as a relative one pointing to the item id.
+      url = '%s/' % self.pk
+    string_params = { 'url': url,
+                      'title' : _(self.name),
+                      'link_text': _(self.name),
+                    }
+    return MenuGroup.link_template % string_params
 
   def generate_hierarchy(self, request):
     """Generate the menu hierarchy for this MenuGroup.
@@ -342,6 +371,32 @@ class MenuOption(models.Model):
       opt_type = "Model"
     return """<%sMenuOption "%s">""" % (opt_type, self.name)
 
+  def as_admin_link(self):
+    """Generate an HTML tag representing a link to edit this option.
+
+    This function is mostly used internally and will produce an HTML tag that
+    represents this menu option's page on the admin site allowing quick access
+    to the page for editing the item.
+
+    """
+
+    try:
+      # Assume we're dealing with a nice version of django that can handle
+      # reversing admin urls.
+      info = (self._meta.app_label,
+              self._meta.module_name
+             )
+      url_name = 'admin:%s_%s_change' % info
+      url = reverse(url_name, args=[self.pk])
+    except NoReverseMatch, e:
+      # If not then this function is designed to run on the url level just below
+      # edit anyway so return the url as a relative one pointing to the item id.
+      url = '%s/' % self.pk
+    string_params = { 'url': url,
+                      'title' : _(self.alt_text),
+                      'link_text': _(self.name),
+                    }
+    return MenuOption.link_template % string_params
 
   def as_link(self, url_params=None):
     """Generate an HTML tag representing this menu option as a link.

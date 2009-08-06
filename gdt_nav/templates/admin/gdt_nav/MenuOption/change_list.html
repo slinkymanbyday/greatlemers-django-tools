@@ -1,5 +1,6 @@
 {% extends "admin/change_list.html" %}
 {% load i18n %}
+{% load menu_tags %}
 {% block object-tools %}
   {% if has_add_permission %}
     <ul class="object-tools">
@@ -12,4 +13,28 @@
       {% endfor %}
     </ul>
   {% endif %}
+{% endblock %}
+{% block pagination %}
+{{ block.super }}
+  <h4>Hierarchy View (filters do not apply to this section)</h4>
+  {% for group in menu_groups %}
+    <table summary="Menu options available in the {{ group.name }} menu group.">
+    <caption>{{ group.as_admin_link|safe }}</caption>
+      <thead>
+        <tr>
+          <th>&#160;</th>
+          <th>Option type</th>
+          <th>Show to Anonymous</th>
+          <th>Show to Authenticated</th>
+          <th>Show to Staff</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% admin_menu_as_tag group %}
+      </tbody>
+    </table>
+    {% if not forloop.last %}
+      <br />
+    {% endif %}
+  {% endfor %}
 {% endblock %}
