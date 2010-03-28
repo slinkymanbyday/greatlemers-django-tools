@@ -1,0 +1,3 @@
+<ol>
+{% for crumb_url, crumb_title in breadcrumbs %}  <li{% if forloop.last %} class="last"{% else %}><a href="{{ crumb_url }}"{% endif %}>{{ crumb_title }}{% if not forloop.last %}</a>{% endif %}</li>{% endfor %}
+</ol>
