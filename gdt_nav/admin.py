@@ -26,6 +26,7 @@ class MenuOptionAdmin(ModelAdmin):
                        'name',
                        'alt_text',
                        'notes',
+                       'menu_option_id',
                       ),
            },
     ),
@@ -165,6 +166,7 @@ class AbsoluteMenuOptionAdmin(ModelAdmin):
   form = AbsoluteMenuOptionForm
   fieldsets = (
     (None, {'fields': ('name',
+                       'menu_option_id',
                        'alt_text',
                        'url',
                        'notes',
@@ -211,6 +213,7 @@ class NamedMenuOptionAdmin(ModelAdmin):
   form = NamedMenuOptionForm
   fieldsets = (
     (None, {'fields': ('name',
+                       'menu_option_id',
                        'alt_text',
                        'url_name',
                        'notes',
@@ -257,6 +260,7 @@ class ModelMenuOptionAdmin(ModelAdmin):
   form = ModelMenuOptionForm
   fieldsets = (
     (None, {'fields': ('name',
+                       'menu_option_id',
                        'alt_text',
                        'url_name',
                        'notes',
