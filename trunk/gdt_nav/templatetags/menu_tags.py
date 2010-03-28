@@ -8,7 +8,7 @@ register = template.Library()
 # Some templates to be used for describing how the menu depth class should be
 # output, how items should be output and how groups of items should be output.
 _menu_level_template = """menu_level_%s"""
-_item_template = """<%(item_tag)s class="menu_item %(menu_level)s">%(item)s%(sub_list)s</%(item_tag)s>"""
+_item_template = """<%(item_tag)s%(menu_option_id)s class="menu_item %(menu_level)s%(selected)s">%(item)s%(sub_list)s</%(item_tag)s>"""
 _group_template = """<%(group_tag)s class="%(menu_level)s">%(group)s</%(group_tag)s>"""
 
 @register.inclusion_tag("admin_menu_as_tag.html", takes_context=True)
@@ -157,16 +157,27 @@ def _generate_menu_string(hierarchies, hier_index, selected_items,
     # After assignment opts will be filled with a list of tuples, each
     # containing a string representing the item and a boolean indicating if the
     # item should receive the selected class name.
-    print hierarchies, hier_index
     if selected_items.get(opt,False):
       opts = opt.as_non_link(selected_params)
     else:
       opts = opt.as_link(selected_params)
+    option_index = None
+    if opt.option_type == MenuOption.MODEL_MENU_OPTION:
+      option_index = 0
     # Loop through all the tuples we got back.
     for opt_string, opt_selected in opts:
+      if not opt.menu_option_id:
+        menu_option_id = ''
+      elif option_index is not None:
+        option_index += 1
+        menu_option_id = " id='%s_%s'" % (opt.menu_option_id, option_index)
+      else:
+        menu_option_id = " id='%s'" % opt.menu_option_id
       # Tack on the selected class name if appropriate.
+      selected_class = ''
       if opt_selected:
         full_classes = classes + ['selected',]
+        selected_class = ' selected'
       else:
         full_classes = classes
       # Build up the class string and apply it to the item string.
@@ -180,6 +191,8 @@ def _generate_menu_string(hierarchies, hier_index, selected_items,
                        'sub_list': '',
                        'item_tag':item_tag,
                        'menu_level':menu_level,
+                       'selected': selected_class,
+                       'menu_option_id': menu_option_id,
                       }
       # If the current option is shown to have sub menus and they are allowed to
       # be displayed then recursively call this function with the option as the

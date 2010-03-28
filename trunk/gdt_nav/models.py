@@ -316,6 +316,8 @@ class MenuOption(models.Model):
                               help_text="Text that should appear when hovering over the link.")
   menu_group = models.ForeignKey('MenuGroup', related_name='menu_items',
                                  help_text="The menu group that the link belongs in.")
+  menu_option_id = models.CharField(max_length=256, null=True, blank=True,
+                             help_text="The value that will be given to the id field of the menu option (for use with css/javascript etc.).  For model menu options the position will be suffixed to the end of this value.")
   ordering = models.IntegerField(help_text="The position of the item in the menu group or sub-menu.")
   permissions = models.ManyToManyField(Permission, null=True, blank=True,
                                        help_text="The permissions that the user must have to see this menu item (when logged in - ignored when the user is anonymous).")
