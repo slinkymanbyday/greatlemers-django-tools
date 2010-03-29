@@ -213,10 +213,12 @@ class MenuGroup(models.Model):
     url = request.build_absolute_uri(path)
 
     # The url resolver which will generate some of the url info.
-    resolver = get_resolver(None)
+    # Get urlconf from request object if available.
+    urlconf = getattr(request, "urlconf", None)
+    resolver = get_resolver(urlconf)
 
     # Pull out the view function, and the url arguments and keywords.
-    view_func, url_args, url_kwargs = resolver.resolve(path)
+    view_func, url_args, url_kwargs = resolver.resolve(request.path_info)
 
     # Fetch a list of all the signatures of the items that can be reversed
     # to produce the view function.
