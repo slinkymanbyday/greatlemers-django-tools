@@ -209,8 +209,8 @@ class MenuGroup(models.Model):
 
     # Start by fetching the path from the request and using it to build
     # the full url.
-    path = request.path
-    url = request.build_absolute_uri(path)
+    path = request.path_info
+    url = request.build_absolute_uri(request.path)
 
     # The url resolver which will generate some of the url info.
     # Get urlconf from request object if available.
