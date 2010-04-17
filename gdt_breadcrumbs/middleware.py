@@ -4,7 +4,8 @@ class BreadcrumbTracker(object):
     from django.conf import settings
     reset = getattr(view_function, 'reset_breadcrumbs', False)
     if reset is True or (callable(reset) \
-        and reset(request, view_args, view_kwargs)):
+        and reset(request, view_args, view_kwargs)) or \
+        BREADCRUMB_URL not in request.session:
       request.session[BREADCRUMB_TRAIL] = {settings.GDT_BREADCRUMB_ROOT_URL: settings.GDT_BREADCRUMB_ROOT_TITLE,}
       request.session[BREADCRUMB_URL] = [settings.GDT_BREADCRUMB_ROOT_URL]
       request.session.modified = True
