@@ -3,9 +3,9 @@
   <tr>
     <th scope="row" style="white-space:pre;vertical-align:middle;line-height:0.9em;padding-top:0px;padding-bottom:0px;overflow:hidden;">{{ first_spaces|safe }}{{ spaces|safe }}{{ item.as_admin_link|safe }}{{ second_spaces|safe }}</th>
     <td>{{ item.get_option_type_display }}</td>
-    <td><img src="{% admin_media_prefix %}img/admin/icon-{{ item.show_to_anonymous|yesno }}.gif" /></td>
-    <td><img src="{% admin_media_prefix %}img/admin/icon-{{ item.show_to_authenticated|yesno }}.gif" /></td>
-    <td><img src="{% admin_media_prefix %}img/admin/icon-{{ item.show_to_staff|yesno }}.gif" /></td>
+    <td><img src="{% admin_media_prefix %}img/admin/icon-{{ item.show_to_anonymous|yesno:"yes,no" }}.gif" /></td>
+    <td><img src="{% admin_media_prefix %}img/admin/icon-{{ item.show_to_authenticated|yesno:"yes,no" }}.gif" /></td>
+    <td><img src="{% admin_media_prefix %}img/admin/icon-{{ item.show_to_staff|yesno:"yes,no" }}.gif" /></td>
   </tr>
 {% endif %}
 {% for child in children %}
