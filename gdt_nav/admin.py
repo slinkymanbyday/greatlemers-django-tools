@@ -6,7 +6,18 @@ from django.utils.functional import update_wrapper
 from django.utils.translation import ugettext as _
 from forms import AbsoluteMenuOptionForm, ModelMenuOptionForm,\
                   NamedMenuOptionForm
-site.register(MenuGroup)
+
+class MenuGroupAdmin(ModelAdmin):
+  change_form_template = "admin_menugroup_change_form.html"
+  fieldsets = (
+    ('Settings', {'fields': ('name',
+                             'notes',
+                            ),
+                 },
+    ),
+  )
+
+site.register(MenuGroup, MenuGroupAdmin)
 
 class MenuOptionAdmin(ModelAdmin):
   list_display = ('name', 'option_type', 'menu_group',)
