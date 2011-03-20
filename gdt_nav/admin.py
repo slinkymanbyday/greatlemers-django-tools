@@ -17,6 +17,14 @@ class MenuGroupAdmin(ModelAdmin):
     ),
   )
 
+  def change_view(self, request, object_id, extra_context=None):
+    if extra_context is None:
+      extra_context = {}
+    extra_context['app_label'] = _("GDT Nav")
+    extra_context['menu_option_types'] = MenuOption.MODEL_TYPE_CHOICES
+    return super(MenuGroupAdmin, self).change_view(request,
+                                                   object_id, extra_context)
+
 site.register(MenuGroup, MenuGroupAdmin)
 
 class MenuOptionAdmin(ModelAdmin):

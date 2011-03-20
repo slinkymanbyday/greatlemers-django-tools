@@ -3,20 +3,21 @@
 {% load menu_tags %}
 {% block after_field_sets %}
 {{ block.super }}
-{% if not add %}
+{% if change %}
+<br />
+<h1>Menu options for this group</h1>
+{% if has_add_permission %}
+<ul class="object-tools">
+  {% for id, name in menu_option_types %}
+  <li>
+    <a href="../../menuoption/add/{{ id }}/?menu_group={{ original.id }}{% if is_popup %}&_popup=1{% endif %}" class="addlink" onclick="return showAddAnotherPopup(this);">
+      {% blocktrans with name as name %}Add {{ name }}{% endblocktrans %}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
 <fieldset class="module">
-  <h2>Menu options</h2>
-  {% if has_add_permission %}
-    <ul class="object-tools">
-      {% for id, name in menu_option_types %}
-      <li>
-        <a href="add/{{ id }}/{% if is_popup %}?_popup=1{% endif %}" class="addlink">
-          {% blocktrans with name as name %}Add {{ name }}{% endblocktrans %}
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-  {% endif %}
   {% with original as group %}
     <table summary="Menu options available in the {{ group.name }} menu group.">
       <thead>
